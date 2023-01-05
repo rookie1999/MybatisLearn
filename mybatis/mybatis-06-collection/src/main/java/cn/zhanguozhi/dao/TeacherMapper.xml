@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhanguozhi.dao.TeacherMapper">
+
+    <resultMap id="TeacherStudent" type="cn.zhanguozhi.pojo.Teacher">
+        <id property="id" column="tid"/>
+        <result property="name" column="tname"/>
+        <collection property="students" ofType="cn.zhanguozhi.pojo.Student">
+            <result property="id" column="sid"/>
+            <result property="name" column="sname"/>
+        </collection>
+    </resultMap>
+    <select id="getTeacherById" resultMap="TeacherStudent">
+        select t.id as tid, t.name as tname, s.id as sid, s.name as sname
+        from teacher t inner join student s on t.id = s.tid and t.id = #{id}
+    </select><resultMap id="TeacherStudent2" type="cn.zhanguozhi.pojo.Teacher">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <collection property="students" javaType="ArrayList" ofType="cn.zhanguozhi.pojo.Student"
+                column="id" select="getStudentByTeacherId">
+    </collection>
+</resultMap>
+    <select id="getTeacherById2" resultMap="TeacherStudent2">
+        select id, name from teacher where id = #{id}
+    </select>
+    <select id="getStudentByTeacherId" resultType="cn.zhanguozhi.pojo.Student">
+        select id, name from student where tid = #{tid}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhanguozhi.dao.UserMapper">
+    
+    <resultMap id="userMap" type="cn.zhanguozhi.pojo.User">
+        <!--id节点是主键，column节点是普通字段-->
+        <!--column表示数据库的字段，property是Java类的属性-->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pwd" property="password"/>
+    </resultMap>
+
+    <select id="getUserById" resultMap="userMap" parameterType="int">
+        SELECT * FROM USER where id = #{id}
+    </select>
+</mapper>

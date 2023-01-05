@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhanguozhi.dao.BlogMapper">
+
+    <select id="getAllBlogs" resultType="cn.zhanguozhi.pojo.Blog">
+        select id, title, author, create_time as createTime, views from blog
+    </select>
+
+    <select id="getBlogByMap" parameterType="map" resultType="cn.zhanguozhi.pojo.Blog">
+        select id, title, author, create_time as createTime, views from blog
+        where 1=1
+        <if test="title != null">
+            and title = #{title}
+        </if>
+        <if test="author != null">
+            and author = #{author}
+        </if>
+    </select>
+</mapper>
